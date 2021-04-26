@@ -1,0 +1,163 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Listado de Proveedor</title>
+        <f:event listener="#{proveedorC.listar()}" type="preRenderView" />
+    </h:head>
+    <h:body>
+
+        <p:growl id="growl" showDetail="true" />
+        <p:growl id="growl-sticky" for="sticky-key" showDetail="true" sticky="true" />
+
+        <h:form >
+            <p:menubar >
+                <p:menuitem value="Medicamento" url="./index.xhtml" />
+                <p:menuitem value="Proveedor" url="./Proveedorx.xhtml" />
+            </p:menubar>
+        </h:form>
+
+
+        <h:form id="frproveedor">
+
+
+            <!--formulario del Medicamento-->
+
+            <!--(Nombre, Telefono, Email, Direccion, Ruc, Tipo, Ncomercial, Abreviatura)-->
+
+            <p:panelGrid columns="2">
+
+                <p:outputLabel for="nombre" value="Nombre" />  
+                <p:inputText id="nombre" value="#{proveedorC.pro.nombre}"
+                             required="true" requiredMessage="Falta nombre" 
+                             maxlength="30"/>
+
+                <p:message for="nombre" display="text"/>
+
+                <p:outputLabel for="telefono" value="Telefono" />  
+                <p:inputText id="telefono" value="#{proveedorC.pro.telefono}" 
+                             maxlength="9" required="true" requiredMessage="Falta telefono">
+                    <p:keyFilter regEx="/[0-9]/" />
+                </p:inputText>
+
+                <p:message for="telefono" display="text"/>
+
+                <p:outputLabel for="email" value="Email" />  
+                <p:inputText id="email" value="#{proveedorC.pro.email}" 
+                             maxlength="30" required="true" requiredMessage="Falta email"/> 
+
+                <p:message for="email" display="text"/>
+
+                <p:outputLabel for="direccion" value="Direccion" /> 
+                <p:inputText id="direccion" value="#{proveedorC.pro.direccion}" 
+                             maxlength="25" required="true" requiredMessage="Falta direccion" />
+
+                <p:message for="direccion" display="text"/>
+
+                <p:outputLabel for="ruc" value="Ruc" /> 
+                <p:inputText id="ruc" value="#{proveedorC.pro.ruc}"
+                             maxlength="11" required="true" requiredMessage="Falta ruc" >
+                    <p:keyFilter regEx="/[0-9]/"/> 
+                </p:inputText>
+
+                <p:message for="ruc" display="text"/>
+
+                <p:outputLabel for="tipo" value="Tipo" />  
+                <p:inputText id="tipo" value="#{proveedorC.pro.tipo}" 
+                             maxlength="18" required="true" requiredMessage="Falta tipo"/>
+
+                <p:message for="tipo" display="text"/>
+
+                <p:outputLabel for="ncomercial" value="Ncomercial" /> 
+                <p:inputText id="ncomercial" value="#{proveedorC.pro.ncomercial}"
+                             maxlength="80" required="true" requiredMessage="Falta ncomercial"/>
+
+                <p:message for="ncomercial" display="text"/>
+
+                <p:outputLabel for="abreviatura" value="Abreviatura" />  
+                <p:inputText id="abreviatura" value="#{proveedorC.pro.abreviatura}"
+                             maxlength="8" required="true" requiredMessage="Falta abreviatura"/>
+
+                <p:message for="abreviatura" display="text"/>
+
+                <p:commandButton value="Registrar" actionListener="#{ProveedorC.registrar()}" update="tablaPro, frproveedor"/>
+                <p:commandButton value="Modificar" actionListener="#{proveedorC.modificar()}" update="tablaPro, frproveedor"/>
+
+
+            </p:panelGrid>    
+
+            <h:commandLink>
+                <h:graphicImage url="./../imagenes/LOGO.png" width="70px"/>
+                <p:dataExporter type="pdf" target="tablaPro" fileName="Listado de proveedor" />
+            </h:commandLink>
+
+
+
+            <!--Listado del medicamento-->
+
+            <p:dataTable var="prov" id="tablaPro" value="#{proveedorC.listarpro}"
+
+                paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} datos"
+                rowsPerPageTemplate="5,10,15,20">
+
+                <p:column headerText="Idpro">
+                    <h:outputText value="#{prov.idpro}" />
+                </p:column>
+
+                <p:column headerText="Nombre">
+                    <h:outputText value="#{prov.nombre}" />
+                </p:column>
+
+                <p:column headerText="Telefono">
+                    <h:outputText value="#{prov.telefono}" />
+                </p:column>
+
+                <p:column headerText="Email">
+                    <h:outputText value="#{prov.email}" />     
+                </p:column>
+
+                <p:column headerText="Direccion">
+                    <h:outputText value="#{prov.direccion}" />
+                </p:column>
+
+                <p:column headerText="Ruc">
+                    <h:outputText value="#{prov.ruc}" />
+                </p:column>
+
+                <p:column headerText="Tipo">
+                    <h:outputText value="#{prov.tipo}" />     
+                </p:column>
+
+                <p:column headerText="Ncomercial">
+                    <h:outputText value="#{prov.ncomercial}" />
+                </p:column>
+
+                <p:column headerText="Abreviatura">
+                    <h:outputText value="#{prov.abreviatura}" />
+                </p:column>
+
+
+
+
+
+
+                <p:column headerText="Acciones"> 
+
+
+                    <p:commandButton value="Eliminar" actionListener="#{ProveedorC.eliminar(prov)}" update="tablaPro"/>
+
+
+                    <p:commandButton  value="Obtener" actionListener="#{ProveedorC.obtenerDatos(prov)}" update=":frproveedor"/>
+
+                </p:column>
+
+
+
+            </p:dataTable>
+        </h:form>
+
+    </h:body>
+</html>
+
