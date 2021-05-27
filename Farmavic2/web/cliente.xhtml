@@ -1,0 +1,135 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <h:head>
+        <title>Listado de Clientes</title>
+    </h:head>
+
+    <p:growl id="growl" showSummary="true" showDetail="true" sticky="false" life="4000"/>
+
+    <h:body >
+
+        <h:form >
+            <p:menubar >
+                <p:menuitem value="Vendedor" url="./vendedor.xhtml" />
+                <p:menuitem value="Cliente" url="./cliente.xhtml" />
+                <p:menuitem value="Medicamento" url="./index.xhtml" />
+                <p:menuitem value="Proveedor" url="./Proveedorx.xhtml" />
+            </p:menubar>
+        </h:form>
+
+        <h:form id="frmCliente">
+            <p:panelGrid style="width: 830px"
+                         columns="3" layout="grid">
+
+                <p:outputLabel for="nombre" value="NOMBRE: "/>
+                <p:inputText style="width: 230px"
+                             id="nombre" value="#{clienteC.cliente.nombre}" 
+                             required="true" requiredMessage="Falta nombre" 
+                             maxlength="30" > 
+                    <p:keyFilter regEx="/[A-Z-a-z- ]/" />
+                </p:inputText>
+                <p:message for="nombre" display="text" />
+
+
+
+                <p:outputLabel for="apellido" value="APELLIDO: "/>
+                <p:inputText style="width: 230px" 
+                             id="apellido" value="#{clienteC.cliente.apellido}" 
+                             required="true" requiredMessage="Falta apellido" 
+                             maxlength="30" > 
+                    <p:keyFilter regEx="/[A-Z-a-z- ]/" />
+                </p:inputText>
+                <p:message for="apellido" display="text" />
+
+
+                <p:outputLabel for="dni" value="DNI: "/>
+                <p:inputText style="width: 230px" 
+                             id="dni" value="#{clienteC.cliente.dni}" 
+                             required="true" requiredMessage="Falta dni" 
+                             maxlength="8" > 
+                    <f:validateLength minimum="8" ></f:validateLength>
+
+                    <p:keyFilter regEx="/[0-9]/" /> 
+                </p:inputText> 
+                <p:message for="dni" display="text" />
+
+
+                <p:commandButton value="Agregar" update="frmCliente,:tablaP" actionListener="#{clienteC.registrar()}"/>
+
+                <p:commandButton value="Modificar" update="frmCliente,:tablaP" actionListener="#{clienteC.modificar()}">
+                    <p:confirm header="Confirmación" message="¿Desea Modificar?" icon="ui-icon-alert"/>
+                    <p:tooltip trackMouse="true"/>
+                </p:commandButton>
+
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+                </p:confirmDialog>
+
+            </p:panelGrid>
+
+        </h:form>
+
+
+
+
+        <h:form id="tablaP">
+
+            <h:commandLink>
+                <h:graphicImage url="./../imagenes/LOGO.png" width="50px"/>
+                <p:dataExporter type="pdf" target="dataCliente" fileName="Listado de clientes" />
+            </h:commandLink>
+
+
+
+            <p:dataTable var="Cli" id="dataCliente" value="#{clienteC.lstcliente}"
+                         paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} datos"
+                         rowsPerPageTemplate="5,10,15,20">
+
+
+                <p:column headerText="Ide"> 
+                    <h:outputText value="#{Cli.ide}" /> 
+                </p:column>
+                <p:column headerText="Nombre"> 
+                    <h:outputText value="#{Cli.nombre}" /> 
+                </p:column>
+                <p:column headerText="Apellido"> 
+                    <h:outputText value="#{Cli.apellido}" /> 
+                </p:column>
+                <p:column headerText="Dni"> 
+                    <h:outputText value="#{Cli.dni}" /> 
+                </p:column>
+
+                <p:column headerText="Acciones"> 
+                    <p:commandButton  value="eliminar" actionListener="#{clienteC.eliminar(Cli)}" update=":tablaP" >
+                        <p:confirm header="Confirmación" message="¿Desea Eliminar?" icon="ui-icon-alert"/>
+                        <p:tooltip trackMouse="true"/>
+
+                    </p:commandButton>
+
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+                    </p:confirmDialog>
+
+                    <p:commandButton  value="obtener" actionListener="#{clienteC.obtenerDatos(Cli)}" update=":frmCliente"/>
+
+                </p:column>
+
+
+                <f:facet name="footer">
+                    EN TOTAL HAY #{fn:length(clienteC.lstcliente)} REGISTROS.
+                </f:facet>
+
+            </p:dataTable>
+        </h:form>
+    </h:body>
+
+
+</html>
+

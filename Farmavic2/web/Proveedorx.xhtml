@@ -15,6 +15,8 @@
             <p:menubar >
                 <p:menuitem value="Medicamento" url="./index.xhtml" />
                 <p:menuitem value="Proveedor" url="./Proveedorx.xhtml" />
+                <p:menuitem value="Cliente" url="./cliente.xhtml" />
+                <p:menuitem value="Vendedor" url="./vendedor.xhtml" />
             </p:menubar>
         </h:form>
 
@@ -26,60 +28,61 @@
 
             <!--(Nombre, Telefono, Email, Direccion, Ruc, Tipo, Ncomercial, Abreviatura)-->
 
-            <p:panelGrid columns="2">
+            <p:panelGrid style="width: 830px"
+                         columns="3" layout="grid">>
 
-                <p:outputLabel for="nombre" value="Nombre" />  
-                <p:inputText id="nombre" value="#{proveedorC.pro.nombre}"
-                             required="true" requiredMessage="Falta nombre" 
+                <p:outputLabel value="Nombre" />  
+                <p:inputText  value="#{proveedorC.pro.nombre}"
+                              
                              maxlength="30"/>
 
-                <p:message for="nombre" display="text"/>
+<!--                <p:message for="nombre" display="text"/>-->
 
-                <p:outputLabel for="telefono" value="Telefono" />  
-                <p:inputText id="telefono" value="#{proveedorC.pro.telefono}" 
-                             maxlength="9" required="true" requiredMessage="Falta telefono">
+                <p:outputLabel  value="Telefono" />  
+                <p:inputText  value="#{proveedorC.pro.telefono}" 
+                             maxlength="9" >
                     <p:keyFilter regEx="/[0-9]/" />
                 </p:inputText>
 
-                <p:message for="telefono" display="text"/>
+<!--                <p:message for="telefono" display="text"/>-->
 
-                <p:outputLabel for="email" value="Email" />  
-                <p:inputText id="email" value="#{proveedorC.pro.email}" 
-                             maxlength="30" required="true" requiredMessage="Falta email"/> 
+                <p:outputLabel  value="Email" />  
+                <p:inputText  value="#{proveedorC.pro.email}" 
+                             maxlength="30" /> 
 
-                <p:message for="email" display="text"/>
+<!--                <p:message for="email" display="text"/>-->
 
-                <p:outputLabel for="direccion" value="Direccion" /> 
-                <p:inputText id="direccion" value="#{proveedorC.pro.direccion}" 
-                             maxlength="25" required="true" requiredMessage="Falta direccion" />
+                <p:outputLabel  value="Direccion" /> 
+                <p:inputText  value="#{proveedorC.pro.direccion}" 
+                             maxlength="25" />
 
-                <p:message for="direccion" display="text"/>
+<!--                <p:message for="direccion" display="text"/>-->
 
-                <p:outputLabel for="ruc" value="Ruc" /> 
-                <p:inputText id="ruc" value="#{proveedorC.pro.ruc}"
-                             maxlength="11" required="true" requiredMessage="Falta ruc" >
+                <p:outputLabel  value="Ruc" /> 
+                <p:inputText  value="#{proveedorC.pro.ruc}"
+                             maxlength="11"  >
                     <p:keyFilter regEx="/[0-9]/"/> 
                 </p:inputText>
 
-                <p:message for="ruc" display="text"/>
+<!--                <p:message for="ruc" display="text"/>-->
 
-                <p:outputLabel for="tipo" value="Tipo" />  
-                <p:inputText id="tipo" value="#{proveedorC.pro.tipo}" 
-                             maxlength="18" required="true" requiredMessage="Falta tipo"/>
+                <p:outputLabel  value="Tipo" />  
+                <p:inputText  value="#{proveedorC.pro.tipo}" 
+                             maxlength="18" />
 
-                <p:message for="tipo" display="text"/>
+<!--                <p:message for="tipo" display="text"/>-->
 
-                <p:outputLabel for="ncomercial" value="Ncomercial" /> 
-                <p:inputText id="ncomercial" value="#{proveedorC.pro.ncomercial}"
-                             maxlength="80" required="true" requiredMessage="Falta ncomercial"/>
+                <p:outputLabel  value="Ncomercial" /> 
+                <p:inputText  value="#{proveedorC.pro.ncomercial}"
+                             maxlength="80" />
 
-                <p:message for="ncomercial" display="text"/>
+<!--                <p:message for="ncomercial" display="text"/>-->
 
-                <p:outputLabel for="abreviatura" value="Abreviatura" />  
-                <p:inputText id="abreviatura" value="#{proveedorC.pro.abreviatura}"
-                             maxlength="8" required="true" requiredMessage="Falta abreviatura"/>
+                <p:outputLabel  value="Abreviatura" />  
+                <p:inputText  value="#{proveedorC.pro.abreviatura}"
+                             maxlength="8" />
 
-                <p:message for="abreviatura" display="text"/>
+<!--                <p:message for="abreviatura" display="text"/>-->
 
                 <p:commandButton value="Registrar" actionListener="#{ProveedorC.registrar()}" update="tablaPro, frproveedor"/>
                 <p:commandButton value="Modificar" actionListener="#{proveedorC.modificar()}" update="tablaPro, frproveedor"/>
@@ -147,9 +150,12 @@
 
 
                     <p:commandButton value="Eliminar" actionListener="#{ProveedorC.eliminar(prov)}" update="tablaPro"/>
+                    
+                    
+                    <p:commandButton  value="Obtener" actionListener="#{proveedorC.obtenerDatos(prov)}" update=":frproveedor"/>
 
 
-                    <p:commandButton  value="Obtener" actionListener="#{ProveedorC.obtenerDatos(prov)}" update=":frproveedor"/>
+<!--                    <p:commandButton  value="Obtener" actionListener="#{ProveedorC.obtenerDatos(prov)}" update=":frproveedor"/>-->
 
                 </p:column>
 

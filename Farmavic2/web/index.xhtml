@@ -16,6 +16,8 @@
             <p:menubar >
                 <p:menuitem value="Medicamento" url="./index.xhtml" />
                 <p:menuitem value="Proveedor" url="./Proveedorx.xhtml" />
+                <p:menuitem value="Cliente" url="./cliente.xhtml" />
+                <p:menuitem value="Vendedor" url="./vendedor.xhtml" />
             </p:menubar>
         </h:form>
 
@@ -29,43 +31,43 @@
             <p:panelGrid style="width: 830px"
                          columns="3" layout="grid">
                 <!--<p:outputLabel value="Ide" />  <p:inputText value="#{medicamentoC2.med.ide}" maxlength="8"/>-->
-                <p:outputLabel for="presentacion" value="Presentacion" />  <p:inputText id="presentacion" value="#{medicamentoC2.med.presentacion}" maxlength="30" required="true" requiredMessage="Falta presentacion"/>
+                <p:outputLabel  value="Presentacion" />  <p:inputText  value="#{medicamentoC2.med.presentacion}" maxlength="30" />
 
-                <p:message for="presentacion" display="text"/>
+                <!--                <p:message for="presentacion" display="text"/>-->
 
-                <p:outputLabel for="generico" value="Generico" />  <p:inputText id="generico" value="#{medicamentoC2.med.generico}" maxlength="1" required="true" requiredMessage="Falta generico"/>
+                <p:outputLabel  value="Generico" />  <p:inputText  value="#{medicamentoC2.med.generico}" maxlength="1" />
 
-                <p:message for="generico" display="text"/>
+                <!--                <p:message for="generico" display="text"/>-->
 
-                <p:outputLabel for="comercial" value="Comercial" />  <p:inputText id="comercial" value="#{medicamentoC2.med.comercial}" maxlength="1" required="true" requiredMessage="Falta comercial"/>
+                <p:outputLabel  value="Comercial" />  <p:inputText  value="#{medicamentoC2.med.comercial}" maxlength="1" />
 
-                <p:message for="comercial" display="text"/>
+                <!--                <p:message for="comercial" display="text"/>-->
 
-                <p:outputLabel for="precio" value="Precio" />  <p:inputText id="precio" value="#{medicamentoC2.med.precio}" maxlength="10" required="true" requiredMessage="Falta precio">
+                <p:outputLabel  value="Precio" />  <p:inputText  value="#{medicamentoC2.med.precio}" maxlength="10" >
                     <p:keyFilter regEx="/[0-9]/" />
                 </p:inputText>
 
-                <p:message for="precio" display="text"/>
+                <!--                <p:message for="precio" display="text"/>-->
 
-                <p:outputLabel for="vencimiento" value="Vencimiento" />  <p:calendar id="vencimiento" value="#{medicamentoC2.med.vencimiento}" mask="99/99/99" mindate="@now" required="true" requiredMessage="Falta vencimiento"/>
+                <p:outputLabel  value="Vencimiento" />  <p:calendar  value="#{medicamentoC2.med.vencimiento}" mask="99/99/99" mindate="@now" />
 
-                <p:message for="vencimiento" display="text"/>
+                <!--                <p:message for="vencimiento" display="text"/>-->
 
-                <p:outputLabel for="formula" value="Formula" />  <p:inputText id="formula" value="#{medicamentoC2.med.formula}" maxlength="50" required="true" requiredMessage="Falta formula"/>
+                <p:outputLabel  value="Formula" />  <p:inputText  value="#{medicamentoC2.med.formula}" maxlength="50" />
 
-                <p:message for="formula" display="text"/>
+                <!--                <p:message for="formula" display="text"/>-->
 
-                <p:outputLabel for="lote" value="Lote" />  <p:inputText id="lote" value="#{medicamentoC2.med.lote}" maxlength="12" required="true" requiredMessage="Falta lote"/>
+                <p:outputLabel  value="Lote" />  <p:inputText  value="#{medicamentoC2.med.lote}" maxlength="12" />
 
-                <p:message for="lote" display="text"/>
+                <!--                <p:message for="lote" display="text"/>-->
 
-                <p:outputLabel for="concentracion" value="Concetracion" />  <p:inputText id="concentracion" value="#{medicamentoC2.med.concentracion}" maxlength="20" required="true" requiredMessage="Falta nombre"/>
+                <p:outputLabel  value="Concetracion" />  <p:inputText  value="#{medicamentoC2.med.concentracion}" maxlength="20" />
 
-                <p:message for="concentracion" display="text"/>
+                <!--                <p:message for="concentracion" display="text"/>-->
 
-                <p:outputLabel for="via" value="Via" />  <p:inputText id="via" value="#{medicamentoC2.med.via}" maxlength="20" required="true" requiredMessage="Falta via"/>
+                <p:outputLabel  value="Via" />  <p:inputText  value="#{medicamentoC2.med.via}" maxlength="20" />
 
-                <p:message for="via" display="text"/>
+                <!--                <p:message for="via" display="text"/>-->
 
                 <p:commandButton value="Registrar" actionListener="#{medicamentoC2.registrar()}" update="tablaMedi, frmedicamento"/>
                 <p:commandButton value="Modificar" actionListener="#{medicamentoC2.modificar()}" update="tablaMedi, frmedicamento">
@@ -82,98 +84,100 @@
 <!--                <p:commandButton value="Listar" actionListener="#{medicamentoC2.listar()}" update="tablaMedi" />            -->
             </p:panelGrid>    
 
+            <!--        </h:form>-->
+
+
+
+            <!--        <h:form id="frmedicamento">-->
+
+            <h:commandLink>
+                <h:graphicImage url="./../imagenes/LOGO.png" width="70px"/>
+                <p:dataExporter type="pdf" target="tablaMedi" fileName="Listado de medicamento" />
+            </h:commandLink>
+
+
+
+            <!--Listado del medicamento-->
+
+            <p:dataTable var="medic" id="tablaMedi" value="#{medicamentoC2.listarmed}"
+
+                         paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} datos"
+                         rowsPerPageTemplate="5,10,15,20">
+
+                <p:column headerText="Ide">
+                    <h:outputText value="#{medic.ide}" />
+                </p:column>
+
+                <p:column headerText="Presentacion">
+                    <h:outputText value="#{medic.presentacion}" />
+                </p:column>
+
+                <p:column headerText="Generico">
+                    <h:outputText value="#{medic.generico}" />
+                </p:column>
+
+                <p:column headerText="Comercial">
+                    <h:outputText value="#{medic.comercial}" />     
+                </p:column>
+
+                <p:column headerText="Precio">
+                    <h:outputText value="#{medic.precio}" />
+                </p:column>
+
+                <p:column headerText="Vencimiento">
+                    <h:outputText value="#{medic.vencimiento}" />
+                </p:column>
+
+                <p:column headerText="Formula">
+                    <h:outputText value="#{medic.formula}" />     
+                </p:column>
+
+                <p:column headerText="Lote">
+                    <h:outputText value="#{medic.lote}" />
+                </p:column>
+
+                <p:column headerText="Concentracion">
+                    <h:outputText value="#{medic.concentracion}" />
+                </p:column>
+
+                <p:column headerText="Via">
+                    <h:outputText value="#{medic.via}" />
+                </p:column>
+
+
+
+
+                <p:column headerText="Acciones"> 
+
+
+                    <p:commandButton value="Eliminar" actionListener="#{medicamentoC2.eliminar(medic)}" update="tablaMedi">
+                        <p:confirm header="Confirmación" message="¿Desea Eliminar?" icon="ui-icon-alert"/>
+                        <p:tooltip trackMouse="true"/>
+
+
+                    </p:commandButton>
+
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+                    </p:confirmDialog>
+
+
+                    <p:commandButton  value="Obtener" actionListener="#{medicamentoC2.obtenerDatos(medic)}" update=":frmedicamento"/>
+
+                </p:column>
+
+
+
+
+
+            </p:dataTable>
+
+
+
         </h:form>
 
-
-
-        <h:form id="frmedicamento">
-
-        <h:commandLink>
-            <h:graphicImage url="./../imagenes/LOGO.png" width="70px"/>
-            <p:dataExporter type="pdf" target="tablaMedi" fileName="Listado de medicamento" />
-        </h:commandLink>
-
-
-
-        <!--Listado del medicamento-->
-
-        <p:dataTable var="medic" id="tablaMedi" value="#{medicamentoC2.listarmed}"
-
-                     paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                     currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} datos"
-                     rowsPerPageTemplate="5,10,15,20">
-
-            <p:column headerText="Ide">
-                <h:outputText value="#{medic.ide}" />
-            </p:column>
-
-            <p:column headerText="Presentacion">
-                <h:outputText value="#{medic.presentacion}" />
-            </p:column>
-
-            <p:column headerText="Generico">
-                <h:outputText value="#{medic.generico}" />
-            </p:column>
-
-            <p:column headerText="Comercial">
-                <h:outputText value="#{medic.comercial}" />     
-            </p:column>
-
-            <p:column headerText="Precio">
-                <h:outputText value="#{medic.precio}" />
-            </p:column>
-
-            <p:column headerText="Vencimiento">
-                <h:outputText value="#{medic.vencimiento}" />
-            </p:column>
-
-            <p:column headerText="Formula">
-                <h:outputText value="#{medic.formula}" />     
-            </p:column>
-
-            <p:column headerText="Lote">
-                <h:outputText value="#{medic.lote}" />
-            </p:column>
-
-            <p:column headerText="Concentracion">
-                <h:outputText value="#{medic.concentracion}" />
-            </p:column>
-
-            <p:column headerText="Via">
-                <h:outputText value="#{medic.via}" />
-            </p:column>
-
-
-
-
-            <p:column headerText="Acciones"> 
-
-
-                <p:commandButton value="Eliminar" actionListener="#{medicamentoC2.eliminar(medic)}" update="tablaMedi">
-                    <p:confirm header="Confirmación" message="¿Desea Eliminar?" icon="ui-icon-alert"/>
-                    <p:tooltip trackMouse="true"/>
-
-
-                </p:commandButton>
-
-                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
-                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
-                </p:confirmDialog>
-
-
-                <p:commandButton  value="Obtener" actionListener="#{medicamentoC2.obtenerDatos(medic)}" update=":frmedicamento"/>
-
-            </p:column>
-
-
-
-        </p:dataTable>
-    
-
-
-        </h:form>
-    
     </h:body>
 </html>
 
