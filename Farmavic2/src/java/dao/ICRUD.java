@@ -13,3 +13,4 @@ public interface ICRUD<Generic> {
 
     List<Generic> listarTodos() throws Exception;
 }
+//FDGFD
